@@ -14,8 +14,13 @@ def index():
 @main.route("/dashboard", methods=['GET'])
 @login_required
 def dashboard():
+
+    result = db.session.query(Producto.id, Producto.nombre, Producto.unidad_id,Producto.precio,
+                Producto.cantidad_min,Producto.cantidad_disp,Producto.proveedor_id,Producto.estado,
+                Proveedor.razonsocial,Unidad.und,Unidad.unidad).join(Proveedor, Producto.proveedor_id == Proveedor.id).join(Unidad, Producto.unidad_id == Unidad.id).filter(Producto.cantidad_min>Producto.cantidad_disp).all()
+
     rol_user = Rol.query.filter_by(id=current_user.rol_id).first()
-    return render_template("dashboard.html", name=current_user.nombre, rol=current_user.rol_id,rol_name=rol_user.rol)
+    return render_template("dashboard.html", name=current_user.nombre, rol=current_user.rol_id,rol_name=rol_user.rol, result= result)
 
 # ------------ USUARIO ------------
 @main.route("/usuario")

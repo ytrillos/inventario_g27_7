@@ -1,507 +1,63 @@
 {% extends "base.html" %}
 {% block content %}
-            <div class="content-1">
-                <div id="top_x_div" style="width: 300px; height: 360px;"></div>
-                <div style="width: 200px;"></div>
-                <div id="piechart" style="width: 400px; height: 360px;"></div>
-            </div>
-            <br><br>
-            <h2>Productos Próximos al límite de inventario permitido</h2>
-            <div class="line"></div>
+<div class="content-1">
+    <div id="top_x_div" style="width: 300px; height: 360px;"></div>
+    <div style="width: 200px;"></div>
+    <div id="piechart" style="width: 400px; height: 360px;"></div>
+</div>
+<br><br>
+<h2>Productos inferior al límite de inventario permitido</h2>
+<div class="line"></div>
 
-            <br>
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Descripción</th>
-                        <th>Undidad</th>
-                        <th>Cant. Disponible</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Pisos De Goma Vagoneta Nissan N-Patrol 8</td>
-                        <td>UND</td>
-                        <td>43</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal" data-book-id0="Pisos De Goma Vagoneta Nissan N-Patrol 8"
-                                data-book-id1="UND" data-book-id2="122108" data-book-id3="35" data-book-id4="43"
-                                data-book-id5="Airi Satou"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal" data-book-id0="Pisos De Goma Vagoneta Nissan N-Patrol 8"
-                                data-book-id1="UND" data-book-id2="122108" data-book-id3="35" data-book-id4="43"
-                                data-book-id5="Airi Satou"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal" data-book-id0="Pisos De Goma Vagoneta Nissan N-Patrol 8"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Flasher Electronico 12V N/P:If353 Camioneta Nissan</td>
-                        <td>UND</td>
-                        <td>106</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal"
-                                data-book-id0="Flasher Electronico 12V N/P:If353 Camioneta Nissan" data-book-id1="UND"
-                                data-book-id2="212885" data-book-id3="98" data-book-id4="106"
-                                data-book-id5="Angelica Ramos"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal"
-                                data-book-id0="Flasher Electronico 12V N/P:If353 Camioneta Nissan" data-book-id1="UND"
-                                data-book-id2="212885" data-book-id3="98" data-book-id4="106"
-                                data-book-id5="Angelica Ramos"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal"
-                                data-book-id0="Flasher Electronico 12V N/P:If353 Camioneta Nissan"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Cremallera Nissan Urban 1</td>
-                        <td>UND</td>
-                        <td>30</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal" data-book-id0="Cremallera Nissan Urban 1" data-book-id1="UND"
-                                data-book-id2="184418" data-book-id3="22" data-book-id4="30"
-                                data-book-id5="Ashton Cox"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal" data-book-id0="Cremallera Nissan Urban 1" data-book-id1="UND"
-                                data-book-id2="184418" data-book-id3="22" data-book-id4="30"
-                                data-book-id5="Ashton Cox"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal" data-book-id0="Cremallera Nissan Urban 1"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Alternador 100 Amp 23100-Au400 X-Trail 1</td>
-                        <td>UND</td>
-                        <td>49</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal" data-book-id0="Alternador 100 Amp 23100-Au400 X-Trail 1"
-                                data-book-id1="UND" data-book-id2="26617" data-book-id3="41" data-book-id4="49"
-                                data-book-id5="Brielle Williamson"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal" data-book-id0="Alternador 100 Amp 23100-Au400 X-Trail 1"
-                                data-book-id1="UND" data-book-id2="26617" data-book-id3="41" data-book-id4="49"
-                                data-book-id5="Brielle Williamson"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal" data-book-id0="Alternador 100 Amp 23100-Au400 X-Trail 1"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Amortiguador Delantero Derecho 54302-Eq025 X-Trail</td>
-                        <td>UND</td>
-                        <td>60</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal"
-                                data-book-id0="Amortiguador Delantero Derecho 54302-Eq025 X-Trail" data-book-id1="UND"
-                                data-book-id2="202259" data-book-id3="52" data-book-id4="60"
-                                data-book-id5="Cedric Kelly"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal"
-                                data-book-id0="Amortiguador Delantero Derecho 54302-Eq025 X-Trail" data-book-id1="UND"
-                                data-book-id2="202259" data-book-id3="52" data-book-id4="60"
-                                data-book-id5="Cedric Kelly"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal"
-                                data-book-id0="Amortiguador Delantero Derecho 54302-Eq025 X-Trail"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Amortiguador Delantero Izquier 54303-Eq025 X-Trail</td>
-                        <td>UND</td>
-                        <td>88</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal"
-                                data-book-id0="Amortiguador Delantero Izquier 54303-Eq025 X-Trail" data-book-id1="UND"
-                                data-book-id2="93373" data-book-id3="80" data-book-id4="88"
-                                data-book-id5="Colleen Hurst"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal"
-                                data-book-id0="Amortiguador Delantero Izquier 54303-Eq025 X-Trail" data-book-id1="UND"
-                                data-book-id2="93373" data-book-id3="80" data-book-id4="88"
-                                data-book-id5="Colleen Hurst"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal"
-                                data-book-id0="Amortiguador Delantero Izquier 54303-Eq025 X-Trail"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Amortiguador Trasero Lh 55303-Eq025 X-Trail 4</td>
-                        <td>UND</td>
-                        <td>106</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal" data-book-id0="Amortiguador Trasero Lh 55303-Eq025 X-Trail 4"
-                                data-book-id1="UND" data-book-id2="186107" data-book-id3="98" data-book-id4="106"
-                                data-book-id5="Garrett Winters"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal" data-book-id0="Amortiguador Trasero Lh 55303-Eq025 X-Trail 4"
-                                data-book-id1="UND" data-book-id2="186107" data-book-id3="98" data-book-id4="106"
-                                data-book-id5="Garrett Winters"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal"
-                                data-book-id0="Amortiguador Trasero Lh 55303-Eq025 X-Trail 4"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Amortiguador Trasero Rh 55302-Eq025 X-Trail 4</td>
-                        <td>UND</td>
-                        <td>37</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal" data-book-id0="Amortiguador Trasero Rh 55302-Eq025 X-Trail 4"
-                                data-book-id1="UND" data-book-id2="91711" data-book-id3="29" data-book-id4="37"
-                                data-book-id5="Herrod Chandler"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal" data-book-id0="Amortiguador Trasero Rh 55302-Eq025 X-Trail 4"
-                                data-book-id1="UND" data-book-id2="91711" data-book-id3="29" data-book-id4="37"
-                                data-book-id5="Herrod Chandler"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal"
-                                data-book-id0="Amortiguador Trasero Rh 55302-Eq025 X-Trail 4"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Anillo De Escape 20695-8H300 X-Trail 1</td>
-                        <td>UND</td>
-                        <td>104</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal" data-book-id0="Anillo De Escape 20695-8H300 X-Trail 1"
-                                data-book-id1="UND" data-book-id2="142848" data-book-id3="96" data-book-id4="104"
-                                data-book-id5="Jena Gaines"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal" data-book-id0="Anillo De Escape 20695-8H300 X-Trail 1"
-                                data-book-id1="UND" data-book-id2="142848" data-book-id3="96" data-book-id4="104"
-                                data-book-id5="Jena Gaines"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal" data-book-id0="Anillo De Escape 20695-8H300 X-Trail 1"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Anillo Escape 2 20695-8H310 X-Trail 1</td>
-                        <td>UND</td>
-                        <td>77</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#viewModal" data-book-id0="Anillo Escape 2 20695-8H310 X-Trail 1"
-                                data-book-id1="UND" data-book-id2="181887" data-book-id3="69" data-book-id4="77"
-                                data-book-id5="Quinn Flynn"><i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                data-target="#updateModal" data-book-id0="Anillo Escape 2 20695-8H310 X-Trail 1"
-                                data-book-id1="UND" data-book-id2="181887" data-book-id3="69" data-book-id4="77"
-                                data-book-id5="Quinn Flynn"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal" data-book-id0="Anillo Escape 2 20695-8H310 X-Trail 1"><i
-                                    class="fas fa-minus-circle"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
+<br>
+<table id="example" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Descripción</th>
+            <th>Undidad</th>
+            <th>Precio</th>
+            <th>Cant. Disponible</th>
+            <th>Cant. Minima</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in result %}
+        <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.unidad }}</td>
+            <td>{{ item.precio }}</td>
+            <td>{{ item.cantidad_disp }}</td>
+            <td>{{ item.cantidad_min }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 
-                <tfoot>
-                    <tr>
-                        <th>Descripción</th>
-                        <th>Undidad</th>
-                        <th>Cant. Disponible</th>
-                        <th>Acciones</th>
-                    </tr>
-                </tfoot>
-            </table>
+    <tfoot>
+        <tr>
+            <th>Descripción</th>
+            <th>Undidad</th>
+            <th>Precio</th>
+            <th>Cant. Disponible</th>
+            <th>Cant. Minima</th>
+        </tr>
+    </tfoot>
+</table>
 
+{% endblock %}
 
-    <!-- Modal Create-->
-    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLongTitle">Crear Producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="c_nombre">Descripción</label>
-                            <input type="text" class="form-control" name="c_nombre" id="c_nombre"
-                                placeholder="Descripción...">
-                        </div>
-                        <div class="form-group">
-                            <label for="c_und">Unidad</label>
-                            <input type="text" class="form-control" name="c_und" id="c_und" placeholder="Unidad..">
-                        </div>
-                        <div class="form-group">
-                            <label for="c_precio">Precio</label>
-                            <input type="number" class="form-control" name="c_precio" id="c_precio"
-                                placeholder="Precio">
-                        </div>
-                        <div class="form-group">
-                            <label for="c_qtymin">Cant. Mínima</label>
-                            <input type="number" class="form-control" name="c_qtymin" id="c_qtymin"
-                                placeholder="Cant. Mínima..">
-                        </div>
-                        <div class="form-group">
-                            <label for="c_qtydis">Cant. Disponible</label>
-                            <input type="number" class="form-control" name="c_qtydis" id="c_qtydis"
-                                placeholder="Disponible..">
-                        </div>
-                        <div class="form-group">
-                            <label for="c_proveedor">Proveedor</label>
-                            <select class="form-control" name="c_proveedor" id="c_proveedor">
-                                <option value=''>Seleccione Proveedor</option>
-                                <option value='Airi Satou'>Airi Satou</option>
-                                <option value='Angelica Ramos'>Angelica Ramos</option>
-                                <option value='Ashton Cox'>Ashton Cox</option>
-                                <option value='Brielle Williamson'>Brielle Williamson</option>
-                                <option value='Cedric Kelly'>Cedric Kelly</option>
-                                <option value='Colleen Hurst'>Colleen Hurst</option>
-                                <option value='Garrett Winters'>Garrett Winters</option>
-                                <option value='Herrod Chandler'>Herrod Chandler</option>
-                                <option value='Jena Gaines'>Jena Gaines</option>
-                                <option value='Quinn Flynn'>Quinn Flynn</option>
-                                <option value='Rhona Davidson'>Rhona Davidson</option>
-                                <option value='Sonya Frost'>Sonya Frost</option>
-                                <option value='Tiger Nixon'>Tiger Nixon</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="executeSw('Creación Producto')">Create</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal View -->
-    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewModalLongTitle">Ver Producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="v_nombre">Descripción</label>
-                            <input type="text" class="form-control" name="v_nombre" id="v_nombre"
-                                placeholder="Descripción..." readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="v_und">Unidad</label>
-                            <input type="text" class="form-control" name="v_und" id="v_und" placeholder="Unidad.."
-                                readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="v_precio">Precio</label>
-                            <input type="text" class="form-control" name="v_precio" id="v_precio" placeholder="Precio"
-                                readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="v_qtymin">Cant. Mínima</label>
-                            <input type="text" class="form-control" name="v_qtymin" id="v_qtymin"
-                                placeholder="Cant. Mínima.." readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="v_qtydis">Cant. Disponible</label>
-                            <input type="text" class="form-control" name="v_qtydis" id="v_qtydis"
-                                placeholder="Disponible.." readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="v_proveedor">Proveedor</label>
-                            <input type="text" class="form-control" name="v_proveedor" id="v_proveedor"
-                                placeholder="Proveedor..." readonly>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Update -->
-    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateModalLongTitle">Actualizar Producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="u_nombre">Descripción</label>
-                            <input type="text" class="form-control" name="u_nombre" id="u_nombre"
-                                placeholder="Descripción...">
-                        </div>
-                        <div class="form-group">
-                            <label for="u_und">Unidad</label>
-                            <input type="text" class="form-control" name="u_und" id="u_und" placeholder="Unidad..">
-                        </div>
-                        <div class="form-group">
-                            <label for="u_precio">Precio</label>
-                            <input type="number" class="form-control" name="u_precio" id="u_precio"
-                                placeholder="Precio">
-                        </div>
-                        <div class="form-group">
-                            <label for="u_qtymin">Cant. Mínima</label>
-                            <input type="number" class="form-control" name="u_qtymin" id="u_qtymin"
-                                placeholder="Cant. Mínima..">
-                        </div>
-                        <div class="form-group">
-                            <label for="u_qtydis">Cant. Disponible</label>
-                            <input type="number" class="form-control" name="u_qtydis" id="u_qtydis"
-                                placeholder="Disponible..">
-                        </div>
-                        <div class="form-group">
-                            <label for="c_proveedor">Proveedor</label>
-                            <select class="form-control" name="u_proveedor" id="u_proveedor">
-                                <option value='Airi Satou'>Airi Satou</option>
-                                <option value='Angelica Ramos'>Angelica Ramos</option>
-                                <option value='Ashton Cox'>Ashton Cox</option>
-                                <option value='Brielle Williamson'>Brielle Williamson</option>
-                                <option value='Cedric Kelly'>Cedric Kelly</option>
-                                <option value='Colleen Hurst'>Colleen Hurst</option>
-                                <option value='Garrett Winters'>Garrett Winters</option>
-                                <option value='Herrod Chandler'>Herrod Chandler</option>
-                                <option value='Jena Gaines'>Jena Gaines</option>
-                                <option value='Quinn Flynn'>Quinn Flynn</option>
-                                <option value='Rhona Davidson'>Rhona Davidson</option>
-                                <option value='Sonya Frost'>Sonya Frost</option>
-                                <option value='Tiger Nixon'>Tiger Nixon</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal"
-                        onclick="executeSw('Actualizar Producto')">Update</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Delete -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLongTitle">Inactivar Producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="d_nombre">Descripción</label>
-                            <input type="text" class="form-control" name="d_nombre" id="d_nombre"
-                                placeholder="Descripción" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label>Esta seguro de inactivar este Producto?</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Si</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% endblock %}
-
-    {% block javascript %}    
+{% block javascript %}
 <script type="text/javascript">
-$(document).ready(function () {
-    $('#example').DataTable();
-});
-
-
-function executeSw(title) {
-    Swal.fire(title, "La grabación se realizo satisfactoriamente!", "success");
-}
-
-$('#viewModal').on('show.bs.modal', function (e) {
-    var bookId0 = $(e.relatedTarget).data('book-id0');
-    var bookId1 = $(e.relatedTarget).data('book-id1');
-    var bookId2 = $(e.relatedTarget).data('book-id2');
-    var bookId3 = $(e.relatedTarget).data('book-id3');
-    var bookId4 = $(e.relatedTarget).data('book-id4');
-    var bookId5 = $(e.relatedTarget).data('book-id5');
-    $(e.currentTarget).find('input[name="v_nombre"]').val(bookId0);
-    $(e.currentTarget).find('input[name="v_und"]').val(bookId1);
-    $(e.currentTarget).find('input[name="v_precio"]').val(bookId2);
-    $(e.currentTarget).find('input[name="v_qtymin"]').val(bookId3);
-    $(e.currentTarget).find('input[name="v_qtydis"]').val(bookId4);
-    $(e.currentTarget).find('input[name="v_proveedor"]').val(bookId5);
-});
-
-$('#updateModal').on('show.bs.modal', function (e) {
-    var bookId0 = $(e.relatedTarget).data('book-id0');
-    var bookId1 = $(e.relatedTarget).data('book-id1');
-    var bookId2 = $(e.relatedTarget).data('book-id2');
-    var bookId3 = $(e.relatedTarget).data('book-id3');
-    var bookId4 = $(e.relatedTarget).data('book-id4');
-    var bookId5 = $(e.relatedTarget).data('book-id5');
-    $(e.currentTarget).find('input[name="u_nombre"]').val(bookId0);
-    $(e.currentTarget).find('input[name="u_und"]').val(bookId1);
-    $(e.currentTarget).find('input[name="u_precio"]').val(bookId2);
-    $(e.currentTarget).find('input[name="u_qtymin"]').val(bookId3);
-    $(e.currentTarget).find('input[name="u_qtydis"]').val(bookId4);
-    $(e.currentTarget).find('select[name="u_proveedor"]').val(bookId5);
-});
-
-$('#createModal').on('show.bs.modal', function (e) {
-    $(e.currentTarget).find('input[name="c_nombre"]').val('');
-    $(e.currentTarget).find('input[name="c_und"]').val('');
-    $(e.currentTarget).find('input[name="c_precio"]').val('');
-    $(e.currentTarget).find('input[name="c_qtymin"]').val('');
-    $(e.currentTarget).find('input[name="c_qtydis"]').val('');
-    $(e.currentTarget).find('select[name="c_proveedor"]').val('');
-});
-
-$('#deleteModal').on('show.bs.modal', function (e) {
-    var bookId0 = $(e.relatedTarget).data('book-id0');
-    $(e.currentTarget).find('input[name="d_nombre"]').val(bookId0);
-});
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
 
 </script>
 
 
-    
+
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['bar']});
-  google.charts.setOnLoadCallback(drawStuff);
+    google.charts.load('current', { 'packages': ['bar'] });
+    google.charts.setOnLoadCallback(drawStuff);
 
     function drawStuff() {
         var data = new google.visualization.arrayToDataTable([
@@ -517,14 +73,14 @@ $('#deleteModal').on('show.bs.modal', function (e) {
             title: 'Productos con bajo inventario',
             width: 300,
             legend: { position: 'none' },
-            chart: { title: 'Productos con bajo inventario'},
+            chart: { title: 'Productos con bajo inventario' },
             bars: 'vertical', // Required for Material Bar Charts.
             axes: {
                 x: {
-                    0: { side: 'bottom', label: 'Productos'} // Top x-axis.
+                    0: { side: 'bottom', label: 'Productos' } // Top x-axis.
                 },
                 y: {
-                    0: {side:'left', label: 'Cantidad'}
+                    0: { side: 'left', label: 'Cantidad' }
                 }
             },
             bar: { groupWidth: "60%" }
@@ -536,38 +92,38 @@ $('#deleteModal').on('show.bs.modal', function (e) {
 </script>
 
 <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
+    google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
 
-    var data = google.visualization.arrayToDataTable([
-        ['Proveedores', 'Cantidad de productos'],
-        ['Proveedor 1', 11],
-        ['Proveedor 2', 2],
-        ['Proveedor 3', 2],
-        ['Proveedor 4', 2],
-        ['Proveedor 5', 7]
-    ]);
+        var data = google.visualization.arrayToDataTable([
+            ['Proveedores', 'Cantidad de productos'],
+            ['Proveedor 1', 11],
+            ['Proveedor 2', 2],
+            ['Proveedor 3', 2],
+            ['Proveedor 4', 2],
+            ['Proveedor 5', 7]
+        ]);
 
-    var options = {
-        title: 'Proveedores con mayor inventario',
-        width: 300,
-        legend: { position: 'none' },
-        chart: { title: 'Productos con mayor inventario'}
-    };
+        var options = {
+            title: 'Proveedores con mayor inventario',
+            width: 300,
+            legend: { position: 'none' },
+            chart: { title: 'Productos con mayor inventario' }
+        };
 
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-    chart.draw(data, options);
+        chart.draw(data, options);
     }
 </script>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    
+
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['bar']});
-  google.charts.setOnLoadCallback(drawStuff);
+    google.charts.load('current', { 'packages': ['bar'] });
+    google.charts.setOnLoadCallback(drawStuff);
 
     function drawStuff() {
         var data = new google.visualization.arrayToDataTable([
@@ -583,14 +139,14 @@ $('#deleteModal').on('show.bs.modal', function (e) {
             title: 'Productos con bajo inventario',
             width: 300,
             legend: { position: 'none' },
-            chart: { title: 'Productos con bajo inventario'},
+            chart: { title: 'Productos con bajo inventario' },
             bars: 'vertical', // Required for Material Bar Charts.
             axes: {
                 x: {
-                    0: { side: 'bottom', label: 'Productos'} // Top x-axis.
+                    0: { side: 'bottom', label: 'Productos' } // Top x-axis.
                 },
                 y: {
-                    0: {side:'left', label: 'Cantidad'}
+                    0: { side: 'left', label: 'Cantidad' }
                 }
             },
             bar: { groupWidth: "60%" }
@@ -602,30 +158,30 @@ $('#deleteModal').on('show.bs.modal', function (e) {
 </script>
 
 <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
+    google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
 
-    var data = google.visualization.arrayToDataTable([
-        ['Proveedores', 'Cantidad de productos'],
-        ['Proveedor 1', 11],
-        ['Proveedor 2', 2],
-        ['Proveedor 3', 2],
-        ['Proveedor 4', 2],
-        ['Proveedor 5', 7]
-    ]);
+        var data = google.visualization.arrayToDataTable([
+            ['Proveedores', 'Cantidad de productos'],
+            ['Proveedor 1', 11],
+            ['Proveedor 2', 2],
+            ['Proveedor 3', 2],
+            ['Proveedor 4', 2],
+            ['Proveedor 5', 7]
+        ]);
 
-    var options = {
-        title: 'Proveedores con mayor inventario',
-        width: 300,
-        legend: { position: 'none' },
-        chart: { title: 'Productos con mayor inventario'}
-    };
+        var options = {
+            title: 'Proveedores con mayor inventario',
+            width: 300,
+            legend: { position: 'none' },
+            chart: { title: 'Productos con mayor inventario' }
+        };
 
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-    chart.draw(data, options);
+        chart.draw(data, options);
     }
 </script>
 
