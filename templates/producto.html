@@ -1,0 +1,418 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Productos</h2>
+<div class="line"></div>
+<div class="d-inline-flex p-2">
+  {% if(rol==1 or rol==2) %}
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">
+    Crear
+  </button>
+  {% endif %}
+</div>
+
+<div class="line"></div>
+
+<table id="example" class="table table-striped table-bordered" style="width: 100%">
+  <thead>
+    <tr>
+      <th>Descripción</th>
+      <th>Unidad</th>
+      <th>Precio COL</th>
+      <th>Cant. Disponible</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in result %}
+    <tr>
+      <td>{{ item.nombre }}</td>
+      <td>{{ item.unidad }}</td>
+      <td>{{ item.precio }}</td>
+      <td>{{ item.cantidad_disp }}</td>
+      <td>
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal"
+          onclick="fn_view('{{item.id}}','{{item.nombre}}','{{item.unidad}}','{{item.precio}}','{{item.cantidad_min}}','{{item.cantidad_disp}}','{{item.razonsocial}}')">
+          <i class="fas fa-eye"></i>
+        </button>
+        {% if(item.estado=='A' and  (rol==1 or rol==3)) %}
+        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#updateModal"
+          onclick="fn_update('{{item.id}}','{{item.nombre}}','{{item.unidad_id}}','{{item.precio}}','{{item.cantidad_min}}','{{item.cantidad_disp}}','{{item.proveedor_id}}')">
+          <i class="fas fa-edit"></i>
+        </button>
+        {% endif %}
+        {% if(item.estado=='A' and rol==1) %}
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal"
+          onclick="fn_delete('{{item.id}}','{{item.nombre }}')">
+          <i class="fas fa-minus-circle"></i>
+        </button>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Descripción</th>
+      <th>Unidad</th>
+      <th>Precio COL</th>
+      <th>Cant. Disponible</th>
+      <th>Acciones</th>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- Modal Create-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLongTitle">Crear Producto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="c_nombre">Descripción</label>
+            <input type="text" class="form-control" name="c_nombre" id="c_nombre" placeholder="Descripción..." />
+          </div>
+          <div class="form-group">
+            <label for="c_undidad_id">Unidad</label>
+            <select class="form-control" name="c_unidad_id" id="c_unidad_id">
+              <option value="">Seleccione Unidad</option>
+              {% for item in unidad %}
+              <option value="{{ item.id }}">{{ item.unidad }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="c_precio">Precio</label>
+            <input type="number" class="form-control" name="c_precio" id="c_precio" placeholder="Precio" />
+          </div>
+          <div class="form-group">
+            <label for="c_cantidad_min">Cant. Mínima</label>
+            <input type="number" class="form-control" name="c_cantidad_min" id="c_cantidad_min"
+              placeholder="Cant. Mínima.." />
+          </div>
+          <div class="form-group">
+            <label for="c_cantidad_disp">Cant. Disponible</label>
+            <input type="number" class="form-control" name="c_cantidad_disp" id="c_cantidad_disp"
+              placeholder="Disponible.." />
+          </div>
+          <div class="form-group">
+            <label for="c_proveedor_id">Proveedor</label>
+            <select class="form-control" name="c_proveedor_id" id="c_proveedor_id">
+              <option value="">Seleccione Proveedor</option>
+              {% for item in proveedor %}
+              <option value="{{ item.id }}">{{ item.razonsocial }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-success" id="btn_create_producto" name="btn_create_producto">
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal View -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalLongTitle">Ver Producto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="v_nombre">Descripción</label>
+            <input type="text" class="form-control" name="v_nombre" id="v_nombre" placeholder="Descripción..."
+              readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_unidad">Unidad</label>
+            <input type="text" class="form-control" name="v_unidad" id="v_unidad" placeholder="Unidad.." readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_precio">Precio</label>
+            <input type="text" class="form-control" name="v_precio" id="v_precio" placeholder="Precio" readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_cantidad_min">Cant. Mínima</label>
+            <input type="text" class="form-control" name="v_cantidad_min" id="v_cantidad_min"
+              placeholder="Cant. Mínima.." readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_cantidad_disp">Cant. Disponible</label>
+            <input type="text" class="form-control" name="v_cantidad_disp" id="v_cantidad_disp"
+              placeholder="Disponible.." readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_proveedor">Proveedor</label>
+            <input type="text" class="form-control" name="v_proveedor" id="v_proveedor" placeholder="Proveedor..."
+              readonly />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Update -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLongTitle">
+          Actualizar Producto
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="u_id">ID</label>
+            <input type="text" class="form-control" name="u_id" id="u_id" placeholder="ID..." readonly />
+          </div>
+          <div class="form-group">
+            <label for="u_nombre">Descripción</label>
+            <input type="text" class="form-control" name="u_nombre" id="u_nombre" placeholder="Descripción..." />
+          </div>
+          <div class="form-group">
+            <label for="u_unidad_id">Unidad</label>
+            <select class="form-control" name="u_unidad_id" id="u_unidad_id">
+              <option value="">Seleccione Unidad</option>
+              {% for item in unidad %}
+              <option value="{{ item.id }}">{{ item.unidad }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="u_precio">Precio</label>
+            <input type="number" class="form-control" name="u_precio" id="u_precio" placeholder="Precio" />
+          </div>
+          <div class="form-group">
+            <label for="u_cantidad_min">Cant. Mínima</label>
+            <input type="number" class="form-control" name="u_cantidad_min" id="u_cantidad_min"
+              placeholder="Cant. Mínima.." />
+          </div>
+          <div class="form-group">
+            <label for="u_cantidad_disp">Cant. Disponible</label>
+            <input type="number" class="form-control" name="u_cantidad_disp" id="u_cantidad_disp"
+              placeholder="Disponible.." />
+          </div>
+          <div class="form-group">
+            <label for="u_proveedor_id">Proveedor</label>
+            <select class="form-control" name="u_proveedor_id" id="u_proveedor_id">
+              <option value="">Seleccione Proveedor</option>
+              {% for item in proveedor %}
+              <option value="{{ item.id }}">{{ item.razonsocial }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-success" id="btn_update_producto" name="btn_update_producto">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLongTitle">
+          Inactivar Producto
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="d_id">ID</label>
+            <input type="text" class="form-control" name="d_id" id="d_id" placeholder="Descripción" readonly />
+          </div>
+          <div class="form-group">
+            <label for="d_nombre">Descripción</label>
+            <input type="text" class="form-control" name="d_nombre" id="d_nombre" placeholder="Descripción" readonly />
+          </div>
+          <div class="form-group">
+            <label>Esta seguro de inactivar este Producto?</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">
+          No
+        </button>
+        <button type="d_button" class="btn btn-danger" data-dismiss="modal" id="btn_delete_producto"
+          name="btn_delete_producto">
+          Si
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+  function fn_view(
+    id, nombre, unidad, precio, cantidad_min, cantidad_disp, proveedor
+  ) {
+    document.getElementById("v_nombre").value = nombre;
+    document.getElementById("v_unidad").value = unidad;
+    document.getElementById("v_precio").value = precio;
+    document.getElementById("v_cantidad_min").value = cantidad_min;
+    document.getElementById("v_cantidad_disp").value = cantidad_disp;
+    document.getElementById("v_proveedor").value = proveedor;
+
+  }
+  function fn_update(
+    id, nombre, unidad_id, precio, cantidad_min, cantidad_disp, proveedor_id
+  ) {
+    document.getElementById("u_id").value = id;
+    document.getElementById("u_nombre").value = nombre;
+    document.getElementById("u_unidad_id").value = unidad_id;
+    document.getElementById("u_precio").value = precio;
+    document.getElementById("u_cantidad_min").value = cantidad_min;
+    document.getElementById("u_cantidad_disp").value = cantidad_disp;
+    document.getElementById("u_proveedor_id").value = proveedor_id;
+  }
+  function fn_create() {
+    document.getElementById("v_nombre").value = "";
+    document.getElementById("v_unidad_id").value = "";
+    document.getElementById("v_precio").value = "";
+    document.getElementById("v_cantidad_min").value = "";
+    document.getElementById("v_cantidad_disp").value = "";
+    document.getElementById("v_proveedor_id").value = "";
+  }
+
+  function fn_delete(id, nombre) {
+    document.getElementById("d_id").value = id;
+    document.getElementById("d_nombre").value = nombre;
+  }
+
+  $("#btn_update_producto").click(function () {
+    var u_id = $("#u_id").val();
+    var u_nombre = $("#u_nombre").val();
+    var u_unidad_id = $("#u_unidad_id").val();
+    var u_precio = $("#u_precio").val();
+    var u_cantidad_min = $("#u_cantidad_min").val();
+    var u_cantidad_disp = $("#u_cantidad_disp").val();
+    var u_proveedor_id = $("#u_proveedor_id").val();
+
+    if (u_nombre != "" && u_id != "") {
+      $.ajax({
+        url: "/producto/update/" + u_id,
+        method: "PUT",
+        data: {
+          u_id: u_id,
+          u_nombre: u_nombre,
+          u_unidad_id: u_unidad_id,
+          u_precio: u_precio,
+          u_cantidad_min: u_cantidad_min,
+          u_cantidad_disp: u_cantidad_disp,
+          u_proveedor_id: u_proveedor_id
+        },
+        success: function (response) {
+          executeSw(response.msg, response.icon, response.status, '/producto');
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    } else {
+      executeSw("Faltan datos necesarios para la grabación", "error", 500);
+    }
+  });
+
+  $("#btn_create_producto").click(function () {
+    var c_nombre = $("#c_nombre").val();
+    var c_unidad_id = $("#c_unidad_id").val();
+    var c_precio = $("#c_precio").val();
+    var c_cantidad_min = $("#c_cantidad_min").val();
+    var c_cantidad_disp = $("#c_cantidad_disp").val();
+    var c_proveedor_id = $("#c_proveedor_id").val();
+
+    if (c_nombre != "") {
+      $.ajax({
+        url: "/producto/create",
+        method: "POST",
+        data: {
+          c_nombre: c_nombre,
+          c_unidad_id: c_unidad_id,
+          c_precio: c_precio,
+          c_cantidad_min: c_cantidad_min,
+          c_cantidad_disp: c_cantidad_disp,
+          c_proveedor_id: c_proveedor_id
+        },
+        success: function (response) {
+          executeSw(response.msg, response.icon, response.status, '/producto');
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    } else {
+      executeSw("Faltan datos necesarios para la grabación", "error", 500);
+    }
+  });
+
+  $("#btn_delete_producto").click(function () {
+    var d_id = $("#d_id").val();
+    var d_nombre = $("#d_nombre").val();
+
+    if (d_nombre != "" && d_id != "") {
+      $.ajax({
+        url: "/producto/delete/" + d_id,
+        method: "PACTH",
+        data: {
+          d_id: d_id,
+          estado: 'I'
+        },
+        success: function (response) {
+          executeSw(response.msg, response.icon, response.status, '/producto');
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    } else {
+      executeSw("Faltan datos necesarios para la inactivación", "error", 500);
+    }
+  });
+
+
+</script>
+{% endblock %}

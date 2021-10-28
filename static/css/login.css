@@ -1,0 +1,55 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    background-image: url(/static/img/background-login.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+
+.boton-login{
+    background-color: #B70926;
+    color: white;
+    border: #B70926;
+}
+
+.header {
+    width: 100%;    
+    padding-right: 20px;
+}
+
+.img-logo {
+    display: block; 
+    width: 20%;
+    height: 20%;  
+}
+
+.img-login {
+    display: block; 
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+#logo {
+    display: inline;
+    float: left;    
+    padding-left: 30px;
+    position: relative;
+}
+
+#slogan {
+    color: white;    
+    font-family: 'Ephesis', cursive;    
+    position: absolute;
+    text-align: center;
+    top: 90%;
+    width: 100%;
+}
+
+#slogan h1{
+    font-size: 65px;
+}

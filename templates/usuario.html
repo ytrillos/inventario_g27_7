@@ -1,0 +1,403 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Usuarios</h2>
+<div class="line"></div>
+
+<div class="d-inline-flex p-2">
+  {% if(rol==1) %}
+  <button type="button" class="btn btn-success" onclick="fn_create()" data-toggle="modal" data-target="#createModal">
+    Crear
+  </button>
+  {% endif %}
+</div>
+
+<div class="line"></div>
+
+<table id="example" class="table table-striped table-bordered" style="width: 100%">
+  <thead>
+    <tr>
+      <th>E-mail</th>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Rol</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in result %}
+    <tr>
+      <td>{{ item.email }}</td>
+      <td>{{ item.nombre }}</td>
+      <td>{{ item.direccion }}</td>
+      <td>{{ item.rol }}</td>
+      <td>
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal"
+          onclick="fn_view('{{item.id}}','{{item.email}}','{{item.nombre}}','{{item.direccion}}','{{item.telefono}}','{{item.rol_id}}','{{item.rol}}')">
+          <i class="fas fa-eye"></i>
+        </button>
+        {% if(item.estado=='A' and (rol==1 or rol==2)) %}
+        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#updateModal"
+          onclick="fn_update('{{item.id}}','{{item.email}}','{{item.nombre}}','{{item.direccion}}','{{item.telefono}}','{{item.rol_id}}','{{item.rol}}')">
+          <i class="fas fa-edit"></i>
+        </button>
+        {% endif %}
+        {% if(item.estado=='A' and rol==1) %}
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal"
+          onclick="fn_delete('{{item.id}}', '{{item.email}}','{{item.nombre }}')">
+          <i class="fas fa-minus-circle"></i>
+        </button>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>E-mail</th>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Rol</th>
+      <th>Acciones</th>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- Modal Create-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLongTitle">Crear Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/signup" id="frm_create" name="frm_create">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="c_email">E-mail</label>
+            <input type="text" class="form-control" name="c_email" id="c_email" placeholder="E-mail..." />
+          </div>
+          <div class="form-group">
+            <label for="c_nombre">Nombre..</label>
+            <input type="text" class="form-control" name="c_nombre" id="c_nombre" placeholder="Nombre.." />
+          </div>
+          <div class="form-group">
+            <label for="c_password">Password..</label>
+            <input type="password" class="form-control" name="c_password" id="c_password" placeholder="Password" />
+          </div>
+          <div class="form-group">
+            <label for="c_direccion">Dirección</label>
+            <input type="text" class="form-control" name="c_direccion" id="c_direccion" placeholder="Dirección..." />
+          </div>
+          <div class="form-group">
+            <label for="c_telefono">Teléfono</label>
+            <input type="text" class="form-control" name="c_telefono" id="c_telefono" placeholder="Teléfono.." />
+          </div>
+          <div class="form-group">
+            <label for="c_rol">Rol</label>
+            <select class="form-control" name="c_rol" id="c_rol">
+              <option value="">Seleccione Rol</option>
+              {% for item in rol_result %}
+              <option value="{{ item.id }}">{{ item.rol }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-success" id="btn_create_usuario"
+            name="btn_create_usuario">
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal View -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalLongTitle">Ver Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="v_email">E-mail</label>
+            <input type="text" class="form-control" name="v_email" id="v_email" placeholder="E-mail..." readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_nombre">Nombre</label>
+            <input type="text" class="form-control" name="v_nombre" id="v_nombre" placeholder="Nombre.." readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_password">Password</label>
+            <input type="password" class="form-control" name="v_password" id="v_password" placeholder="Password"
+              readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_direccion">Dirección</label>
+            <input type="text" class="form-control" name="v_direccion" id="v_direccion" placeholder="Dirección..."
+              readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_telefono">Teléfono</label>
+            <input type="text" class="form-control" name="v_telefono" id="v_telefono" placeholder="Teléfono.."
+              readonly />
+          </div>
+          <div class="form-group">
+            <label for="v_rol">Rol</label>
+            <input type="text" class="form-control" name="v_rol" id="v_rol" placeholder="Rol.." readonly />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Update -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLongTitle">
+          Actualizar Usuario
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="u_id">ID</label>
+            <input type="text" class="form-control" name="u_id" id="u_id" placeholder="ID.." readonly/>
+          </div>
+          <div class="form-group">
+            <label for="u_email">E-mail</label>
+            <input type="text" class="form-control" name="u_email" id="u_email" placeholder="E-mail..." />
+          </div>
+          <div class="form-group">
+            <label for="u_nombre">Nombre</label>
+            <input type="text" class="form-control" name="u_nombre" id="u_nombre" placeholder="Nombre.." />
+          </div>
+          <div class="form-group">
+            <label for="u_password">Password</label>
+            <input type="password" class="form-control" name="u_password" id="u_password" placeholder="Password" readonly/>
+          </div>
+          <div class="form-group">
+            <label for="u_direccion">Dirección</label>
+            <input type="text" class="form-control" name="u_direccion" id="u_direccion" placeholder="Dirección..." />
+          </div>
+          <div class="form-group">
+            <label for="u_telefono">Teléfono</label>
+            <input type="text" class="form-control" name="u_telefono" id="u_telefono" placeholder="Teléfono.." />
+          </div>
+          <div class="form-group">
+            <label for="u_rol">Rol</label>
+            <select class="form-control" name="u_rol" id="u_rol">
+              <option value="">Seleccione Rol</option>
+              {% for item in rol_result %}
+              <option value="{{ item.id }}">{{ item.rol }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-success" id="btn_update_usuario"
+          name="btn_update_usuario">
+          Update
+        </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLongTitle">Inactivar Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="d_id">ID</label>
+            <input type="text" class="form-control" name="d_id" id="d_id" placeholder="ID" readonly />
+          </div>
+          <div class="form-group">
+            <label for="d_nombre">Nombre</label>
+            <input type="text" class="form-control" name="d_nombre" id="d_nombre" placeholder="Nombre" readonly />
+          </div>
+          <div class="form-group">
+            <label for="d_email">Email</label>
+            <input type="text" class="form-control" name="d_email" id="d_email" placeholder="Email" readonly />
+          </div>
+          <div class="form-group">
+            <label>Esta seguro de inactivar este Usuario?</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">
+          No
+        </button>
+        <button type="d_button" class="btn btn-danger" data-dismiss="modal" id="btn_delete_usuario"
+          name="btn_delete_usuario">
+          Si
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+  function fn_view(
+    id,email,nombre,direccion,telefono,rol_id,rol
+  ) {
+    document.getElementById("v_email").value = email;
+    document.getElementById("v_nombre").value = nombre;
+    document.getElementById("v_direccion").value = direccion;
+    document.getElementById("v_telefono").value = telefono;
+    document.getElementById("v_rol").value = rol;
+  }
+
+  function fn_update(
+    id,email,nombre,direccion,telefono,rol_id,rol
+  ) {
+    document.getElementById("u_id").value = id;
+    document.getElementById("u_email").value = email;
+    document.getElementById("u_nombre").value = nombre;
+    document.getElementById("u_direccion").value = direccion;
+    document.getElementById("u_telefono").value = telefono;
+    document.getElementById("u_rol").value = rol_id;
+  }
+
+  function fn_create() {
+    document.getElementById("c_email").value = "";
+    document.getElementById("c_nombre").value = "";
+    document.getElementById("c_password").value = "";
+    document.getElementById("c_direccion").value = "";
+    document.getElementById("c_telefono").value = "";
+    document.getElementById("c_rol").value = "";
+  }
+
+  function fn_delete(id, email, nombre) {
+    document.getElementById("d_id").value = id;
+    document.getElementById("d_email").value = email;
+    document.getElementById("d_nombre").value = nombre;
+  }  
+
+  $("#btn_update_usuario").click(function () {
+    var u_id = $("#u_id").val();
+    var u_nombre = $("#u_nombre").val();
+    var u_email = $("#u_email").val();
+    var u_direccion = $("#u_direccion").val();
+    var u_telefono = $("#u_telefono").val();
+    var u_rol = $("#u_rol").val();
+
+    if (u_nombre != "" && u_id != "" && u_email != "") {
+      $.ajax({
+        url: "/usuario/update/" + u_id,
+        method: "PUT",
+        data: {
+          u_id: u_id,
+          u_nombre: u_nombre,
+          u_email: u_email,
+          u_direccion: u_direccion,
+          u_telefono: u_telefono,
+          u_rol: u_rol,
+        },
+        success: function (response) {
+          executeSw(response.msg, response.icon, response.status, '/usuario');
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    } else {
+      executeSw("Faltan datos necesarios para la grabación", "error", 500);
+    }
+  });
+
+  $('#btn_create_usuario').click(function () {
+    var c_email = $('#c_email').val();
+    var c_nombre = $('#c_nombre').val();
+    var c_password = $('#c_password').val();
+    var c_direccion = $('#c_direccion').val();
+    var c_telefono = $('#c_telefono').val();
+    var c_rol = $('#c_rol').val();
+
+    if (c_email != '' && c_password != '' && c_nombre != '') {
+      $.ajax({
+        url: "/signup",
+        method: "POST",
+        data: {
+          email: c_email,
+          nombre: c_nombre,
+          password: c_password,
+          direccion: c_direccion,
+          telefono: c_telefono,
+          rol: c_rol
+        },
+        success: function (response) {
+          executeSw(response.msg, response.icon, response.status, '/usuario');
+        },
+      });
+    }
+    else {
+      alert("Both Fields are required");
+    }
+  })
+
+  $("#btn_delete_usuario").click(function () {
+    var d_id = $("#d_id").val();
+    var d_nombre = $("#d_nombre").val();
+
+    if (d_nombre != "" && d_id != "") {
+      $.ajax({
+        url: "/usuario/delete/" + d_id,
+        method: "PACTH",
+        data: {
+          d_id: d_id,
+          estado: 'I'
+        },
+        success: function (response) {
+          executeSw(response.msg, response.icon, response.status, '/usuario');
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    } else {
+      executeSw("Faltan datos necesarios para la inactivación", "error", 500);
+    }
+  });
+
+</script>
+{% endblock %}

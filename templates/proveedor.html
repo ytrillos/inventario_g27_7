@@ -1,0 +1,427 @@
+{% extends "base.html" %} {% block content %}
+
+<h2>Proveedores</h2>
+<div class="line"></div>
+
+<div class="d-inline-flex p-2">
+    {% if(rol==1) %}
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">
+            Crear
+        </button>
+    {% endif %}
+</div>
+
+<div class="line"></div>
+
+<table id="example" class="table table-striped table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Razón Social</th>
+            <th>Dirección</th>
+            <th>Ciudad</th>
+            <th>NIT</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in result %}
+        <tr>
+            <td>{{ item.razonsocial }}</td>
+            <td>{{ item.direccion }}</td>
+            <td>{{ item.descripcion }}</td>
+            <td>{{ item.nit }}</td>
+            <td>
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal"
+                    onclick="fn_view('{{item.id}}','{{item.nit}}','{{item.razonsocial}}','{{item.direccion}}','{{item.telefono}}','{{item.descripcion}}','{{item.ciudad_id}}','{{item.contacto}}')">
+                    <i class="fas fa-eye"></i>
+                </button>
+                {% if(item.estado=='A' and (rol==1 or rol==3)) %}
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#updateModal"
+                    onclick="fn_update('{{item.id}}','{{item.nit}}','{{item.razonsocial}}','{{item.direccion}}','{{item.telefono}}','{{item.descripcion}}','{{item.ciudad_id}}','{{item.contacto}}')">
+                    <i class="fas fa-edit"></i>
+                </button>
+                {% endif %}
+                {% if(item.estado=='A' and rol==1) %}
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal"
+                    onclick="fn_delete('{{item.id}}','{{item.razonsocial}}')">
+                    <i class="fas fa-minus-circle"></i>
+                </button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <th>Razón Social</th>
+            <th>Dirección</th>
+            <th>Ciudad</th>
+            <th>NIT</th>
+            <th>Acciones</th>
+        </tr>
+    </tfoot>
+</table>
+
+<!-- Modal Create-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLongTitle">Crear Proveedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nit">NIT</label>
+                        <input type="text" class="form-control" name="c_nit" id="c_nit" placeholder="NIT" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Razón Social</label>
+                        <input type="text" class="form-control" name="c_nombre" id="c_nombre"
+                            placeholder="Razón Social" />
+                    </div>
+                    <div class="form-group">
+                        <label for="ciudad">Ciudad</label>
+                        <select class="form-control" name="c_ciudad" id="c_ciudad">
+                            <option value="">Seleccione Ciudad</option>
+                            {% for item in ciudad %}
+                            <option value="{{ item.id }}">{{ item.descripcion }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <input type="text" class="form-control" name="c_direccion" id="c_direccion"
+                            placeholder="direccion" />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" class="form-control" name="c_telefono" id="c_telefono"
+                            placeholder="telefono" />
+                    </div>
+                    <div class="form-group">
+                        <label for="contacto">Contacto</label>
+                        <input type="text" class="form-control" name="c_contacto" id="c_contacto"
+                            placeholder="contacto" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-success" id="btn_create_proveedor"
+                    name="btn_create_proveedor">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal View -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLongTitle">Ver Proveedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nit">NIT</label>
+                        <input type="text" class="form-control" name="v_nit" id="v_nit" placeholder="NIT" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Razón Social</label>
+                        <input type="text" class="form-control" name="v_nombre" id="v_nombre" placeholder="Razón Social"
+                            readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="ciudad">Ciudad</label>
+                        <input type="text" class="form-control" name="v_ciudad" id="v_ciudad" placeholder="Ciudad"
+                            readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <input type="text" class="form-control" name="v_direccion" id="v_direccion"
+                            placeholder="direccion" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" class="form-control" name="v_telefono" id="v_telefono" placeholder="telefono"
+                            readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="contacto">Contacto</label>
+                        <input type="text" class="form-control" name="v_contacto" id="v_contacto" placeholder="contacto"
+                            readonly />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Update -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLongTitle">
+                    Actualizar Proveedor
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nit">ID</label>
+                        <input type="text" class="form-control" name="u_id" id="u_id" placeholder="ID" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="nit">NIT</label>
+                        <input type="text" class="form-control" name="u_nit" id="u_nit" placeholder="NIT" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Razón Social</label>
+                        <input type="text" class="form-control" name="u_nombre" id="u_nombre"
+                            placeholder="Razón Social" />
+                    </div>
+                    <div class="form-group">
+                        <label for="ciudad">Ciudad</label>
+                        <select class="form-control" name="u_ciudad" id="u_ciudad">
+                            <option value="">Seleccione Ciudad</option>
+                            {% for item in ciudad %}
+                            <option value="{{ item.id }}">{{ item.descripcion }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <input type="text" class="form-control" name="u_direccion" id="u_direccion"
+                            placeholder="direccion" />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" class="form-control" name="u_telefono" id="u_telefono"
+                            placeholder="telefono" />
+                    </div>
+                    <div class="form-group">
+                        <label for="contacto">Contacto</label>
+                        <input type="text" class="form-control" name="u_contacto" id="u_contacto"
+                            placeholder="contacto" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-success" id="btn_update_proveedor"
+                    name="btn_update_proveedor">
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLongTitle">
+                    Inactivar Proveedor
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="d_id">ID</label>
+                        <input type="text" class="form-control" name="d_id" id="d_id" placeholder="ID" readonly />
+
+                        <label for="d_nombre">Razón Social</label>
+                        <input type="text" class="form-control" name="d_nombre" id="d_nombre" placeholder="Razón Social"
+                            readonly />
+                    </div>
+                    <div class="form-group">
+                        <label>Esta seguro de inactivar este proveedor?</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="d_button" class="btn btn-success" data-dismiss="modal">
+                    No
+                </button>
+                <button type="d_button" class="btn btn-danger" data-dismiss="modal" id="btn_delete_proveedor"
+                    name="btn_delete_proveedor">
+                    Si
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block javascript %}
+<script type="text/javascript">
+    function fn_view(
+        id,
+        nit,
+        razonsocial,
+        direccion,
+        telefono,
+        descripcion,
+        ciudad_id,
+        contacto
+    ) {
+        document.getElementById("v_nombre").value = razonsocial;
+        document.getElementById("v_direccion").value = direccion;
+        document.getElementById("v_ciudad").value = descripcion;
+        document.getElementById("v_nit").value = nit;
+        document.getElementById("v_telefono").value = telefono;
+        document.getElementById("v_contacto").value = contacto;
+    }
+    function fn_update(
+        id,
+        nit,
+        razonsocial,
+        direccion,
+        telefono,
+        descripcion,
+        ciudad_id,
+        contacto
+    ) {
+        document.getElementById("u_id").value = id;
+        document.getElementById("u_nombre").value = razonsocial;
+        document.getElementById("u_direccion").value = direccion;
+        document.getElementById("u_ciudad").value = ciudad_id;
+        document.getElementById("u_nit").value = nit;
+        document.getElementById("u_telefono").value = telefono;
+        document.getElementById("u_contacto").value = contacto;
+    }
+    function fn_create() {
+        document.getElementById("c_nombre").value = "";
+        document.getElementById("c_direccion").value = "";
+        document.getElementById("c_ciudad").value = "";
+        document.getElementById("c_nit").value = "";
+        document.getElementById("c_telefono").value = "";
+        document.getElementById("c_contacto").value = "";
+    }
+
+    function fn_delete(id, razonsocial) {
+        document.getElementById("d_id").value = id;
+        document.getElementById("d_nombre").value = razonsocial;
+    }
+
+    $("#btn_update_proveedor").click(function () {
+        var u_id = $("#u_id").val();
+        var u_nombre = $("#u_nombre").val();
+        var u_direccion = $("#u_direccion").val();
+        var u_ciudad = $("#u_ciudad").val();
+        var u_nit = $("#u_nit").val();
+        var u_telefono = $("#u_telefono").val();
+        var u_contacto = $("#u_contacto").val();
+
+        if (u_nombre != "" && u_nit != "" && u_id != "") {
+            $.ajax({
+                url: "/proveedor/update/" + u_id,
+                method: "PUT",
+                data: {
+                    u_id: u_id,
+                    u_nit: u_nit,
+                    u_nombre: u_nombre,
+                    u_direccion: u_direccion,
+                    u_telefono: u_telefono,
+                    u_ciudad: u_ciudad,
+                    u_contacto: u_contacto,
+                },
+                success: function (response) {
+                    executeSw(response.msg, response.icon, response.status, '/proveedor');
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        } else {
+            executeSw("Faltan datos necesarios para la grabación", "error", 500);
+        }
+    });
+
+    $("#btn_create_proveedor").click(function () {
+        var c_nombre = $("#c_nombre").val();
+        var c_direccion = $("#c_direccion").val();
+        var c_ciudad = $("#c_ciudad").val();
+        var c_nit = $("#c_nit").val();
+        var c_telefono = $("#c_telefono").val();
+        var c_contacto = $("#c_contacto").val();
+
+        if (c_nombre != "" && c_nit != "") {
+            $.ajax({
+                url: "/proveedor/create",
+                method: "POST",
+                data: {
+                    c_nit: c_nit,
+                    c_nombre: c_nombre,
+                    c_direccion: c_direccion,
+                    c_telefono: c_telefono,
+                    c_ciudad: c_ciudad,
+                    c_contacto: c_contacto,
+                },
+                success: function (response) {
+                    executeSw(response.msg, response.icon, response.status, '/proveedor');
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        } else {
+            executeSw("Faltan datos necesarios para la grabación", "error", 500);
+        }
+    });
+
+    $("#btn_delete_proveedor").click(function () {
+        var d_id = $("#d_id").val();
+        var d_nombre = $("#d_nombre").val();
+
+        if (d_nombre != "" && d_id != "") {
+            $.ajax({
+                url: "/proveedor/delete/" + d_id,
+                method: "PACTH",
+                data: {
+                    d_id: d_id,
+                    estado: 'I'
+                },
+                success: function (response) {
+                    executeSw(response.msg, response.icon, response.status, '/proveedor');
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        } else {
+            executeSw("Faltan datos necesarios para la inactivación", "error", 500);
+        }
+    });
+
+</script>
+{% endblock %}
